@@ -44,6 +44,32 @@
            
         }
 
+        if($action=='save'){
+            if(isset($_FILES['file'])==true)
+
+            {
+                $fid=$_REQUEST['fid'];
+                $file=$_FILES['file'];
+                $src_path=$file['tmp_name'];
+                $name=$file['name'];
+                $picurl=SaveFile($src_path,$name);
+                
+            $sql="INSERT INTO folders2 (picUrl,folderorNot) VALUES('$picurl',0) where ID ='$fid'";
+            // echo $sql;
+            // exit;
+            if(mysqli_query($conn,$sql)===TRUE){
+                $msg="pic uploaded";
+            }
+            else{
+                $msg="pic cant";
+            }
+
+            
+
+            }
+            echo json_encode($msg);
+        }
+
 
 
 
