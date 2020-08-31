@@ -46,28 +46,35 @@
 
         if($action=='save'){
             if(isset($_FILES['file'])==true)
+            
 
             {
+                  
                 $fid=$_REQUEST['fid'];
                 $file=$_FILES['file'];
+                $createdby=$_SESSION['name'];
+                $createdon=date('Y-m-d H:i:s');
+                $userid=$_SESSION['adminid'];
+                echo "console.log($file)";                
                 $src_path=$file['tmp_name'];
                 $name=$file['name'];
                 $picurl=SaveFile($src_path,$name);
                 
-            $sql="INSERT INTO folders2 (picUrl,folderorNot) VALUES('$picurl',0) where ID ='$fid'";
-            // echo $sql;
+            $sql="INSERT INTO folders2 (NAME,createdBy,createdOn,userid,folderorNot,picUrl,parentfolder) VALUES('$name','$createdby',' $createdon',' $userid',0,'$picurl','$fid')";
+             
             // exit;
             if(mysqli_query($conn,$sql)===TRUE){
                 $msg="pic uploaded";
             }
             else{
-                $msg="pic cant";
+                $msg="Error:";
             }
+            echo json_encode($msg);
 
             
 
             }
-            echo json_encode($msg);
+            
         }
 
 

@@ -32,6 +32,11 @@
 
                 
             });
+            $("#btnupload").on('click',function(){
+                    var cur=cur_fid;
+                    Save(cur); 
+
+            });
             // end of btncreate event
             //start of btnshow event
 
@@ -86,10 +91,11 @@
                             div.attr('fname',data.NAME);
                             div.attr('fid',data.ID);
                             $(".bos").append(div);
-                            $_SESSION['fid']=data['ID'];
+                     
 
                                                             
                         }
+                        
                         $("#page").on('click',function () {
                             cur_fid=$(this).attr("fid");
                             $(this).nextAll().remove();
@@ -133,43 +139,48 @@
                Folders(cur_fid); 
             });
 
-            $("#btnupload").on('click',function(){
+           
 
-                               var cur_fid = $_SESSION['fid'] ;
-                                    var data=new FormData();
-                                    var files=$("#file").get(0).files;
-                                    if(files.lenght>0){
-                                        data.append("file",files[0]);
+                    function Save(fid){
+                        alert(cur_fid);
+                        var data=new FormData();
+                        var files=$("#file").get(0).files;
+                      //  console.log(files);
+                        if(files.length > 0){
+                            data.append("file",files[0]);
+                           // console.log(data);
+                        }
+                        data.append("fid",cur_fid);
+                        data.append("action","save");
+                        console.log("rvst send");
+
+                        var settings={
+                            type:"POST",
+                            url:"api1.php",
+                            contentType:false,
+                            processData:false,
+                            data:data,
+                            success:function(r){
+                                
+                                
+                                alert(r);
+                            },
+                        
+                            error:function(){
+                                alert("error hass occuers");
                                     }
-                                    data.append("fid",cur_fid);
-                                    data.append("Action","save");
-                                    console.log("rvst send");
+                            };
+                            console.log(settings);
 
-                                    var settings={
-                                        Type:"POST",
-                                        url:"api.php",
-                                        contentType:false,
-                                        processType:false,
-                                        data:data,
-                                        sucess:function(r){
-                                            
-                                            
-                                            alert(r);
-                                        },
-                                    
-                         error:function(){
-                            alert("error hass occuers");
-                             }
-                    };
                     console.log("rvst send");
                     $.ajax(settings);
                     console.log("rvst send");
-                       return false;
+                    //+  return false;
 
 
 
 
-            });
+                    }
 
 
 
@@ -198,10 +209,10 @@
     ENTER Folder Name:  <input type="text" id='fname' name='fname'>
       <input type="button" value="CREATE" id='btncreate' name='btncreate'>
       <br>
-      <input type="file" name="file" id="file"/>
+    </div>
+    <div>
+    <input type="file" name="file" id="file"/>
       <input type="submit" value="upload" name='btnupload' id='btnupload'/>
-     
-
     </div>
     
       
