@@ -158,6 +158,9 @@
     <div>
     ENTER Folder Name:  <input type="text" id='fname' name='fname'>
       <input type="button" value="CREATE" id='btncreate' name='btncreate'>
+      <br>
+      <input type="file" name="file" id="file"/>
+      <input type="submit" value="upload" name='btnupload' id='btnupload'/>
      
 
     </div>
@@ -174,6 +177,7 @@
 
         
         </div>
+
 
 
 </div>
