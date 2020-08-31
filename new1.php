@@ -86,6 +86,7 @@
                             div.attr('fname',data.NAME);
                             div.attr('fid',data.ID);
                             $(".bos").append(div);
+                            $_SESSION['fid']=data['ID'];
 
                                                             
                         }
@@ -130,6 +131,44 @@
                cur_fid=$(this).attr("fid");
                $(this).nextAll().remove();
                Folders(cur_fid); 
+            });
+
+            $("#btnupload").on('click',function(){
+
+                               var cur_fid = $_SESSION['fid'] ;
+                                    var data=new FormData();
+                                    var files=$("#file").get(0).files;
+                                    if(files.lenght>0){
+                                        data.append("file",files[0]);
+                                    }
+                                    data.append("fid",cur_fid);
+                                    data.append("Action","save");
+                                    console.log("rvst send");
+
+                                    var settings={
+                                        Type:"POST",
+                                        url:"api.php",
+                                        contentType:false,
+                                        processType:false,
+                                        data:data,
+                                        sucess:function(r){
+                                            
+                                            
+                                            alert(r);
+                                        },
+                                    
+                         error:function(){
+                            alert("error hass occuers");
+                             }
+                    };
+                    console.log("rvst send");
+                    $.ajax(settings);
+                    console.log("rvst send");
+                       return false;
+
+
+
+
             });
 
 
