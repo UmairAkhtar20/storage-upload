@@ -7,14 +7,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<link href="css/ffolders.min.css" rel="stylesheet">
 <style>
 .box {
- padding:5px;
- border: solid 1px red;
- wdith:200px;
+ background-image: url("Folder-icon.png");
+ 
+ padding:1px;
+
+ width:72px;
+ height:72px;
  float:left;
  margin: 5px;
 }
+
 img {
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -98,10 +103,11 @@ img {
                         for(var i=0;i<response.data.length;i++){
                             var data=response.data[i];
                             var div=$("<div class='box'>");
-                            div.append("ID:"+data.ID+"<br>");
-                            div.append("NAME:"+data.NAME+"<br>");
-                            div.append("created by:"+data.createdBy+"<br>");
-                            div.append("userid :"+data.userid+"<br>");
+                          //  div.append("ID:"+data.ID+"<br>");
+                          div.append("<br>");
+                            div.append(""+data.NAME+"<br>");
+                           // div.append("created by:"+data.createdBy+"<br>");
+                           // div.append("userid :"+data.userid+"<br>");
                             div.append("</div>");
                             div.attr('fname',data.NAME);
                             div.attr('fid',data.ID);
@@ -112,6 +118,7 @@ img {
                         }
                         
                         $("#page").on('click',function () {
+                            $(".file").empty();
                             cur_fid=$(this).attr("fid");
                             $(this).nextAll().remove();
                             Folders(cur_fid); 
@@ -149,6 +156,7 @@ img {
             
             //ending of folderfunction
             $("#span1").on('click',function () {
+                $(".file").empty();
                cur_fid=$(this).attr("fid");
                $(this).nextAll().remove();
                Folders(cur_fid); 
@@ -276,9 +284,11 @@ img {
 
         <div class="bos" id='da'>
          </div>
+         <br><br>
          <div class="file">
          
          </div>
+         
 
 
 
