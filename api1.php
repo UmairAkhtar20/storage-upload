@@ -14,7 +14,7 @@
             $createdby=$_SESSION['name'];
             $createdon=date('Y-m-d H:i:s');
             $userid=$_SESSION['adminid'];
-             $sql="INSERT INTO folders2 (NAME,createdBy,createdOn,userid,isFolder,parentfolder)
+             $sql="INSERT INTO folders2 (NAME,createdBy,createdOn,userid,NotFolder,parentfolder)
               VALUES('$fname','$createdby','$createdon','$userid',0,'$fid')";
               $result=mysqli_query($conn,$sql);
               if($result==True){
@@ -30,7 +30,7 @@
         if($action=="show"){
             $userid=$_SESSION['adminid'];
             $fid=$_REQUEST['fid'];
-            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and isFolder=0";
+            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and NotFolder=0";
             $result=mysqli_query($conn,$sql);
             $data=array();
             $resultfound=mysqli_num_rows($result);
@@ -60,7 +60,7 @@
                 $name=$file['name'];
                 $picurl=SaveFile($src_path,$name);
                 
-            $sql="INSERT INTO folders2 (NAME,createdBy,createdOn,userid,isFolder,picUrl,parentfolder) VALUES('$name','$createdby',' $createdon',' $userid',1,'$picurl','$fid')";
+            $sql="INSERT INTO folders2 (NAME,createdBy,createdOn,userid,NotFolder,picUrl,parentfolder) VALUES('$name','$createdby',' $createdon',' $userid',1,'$picurl','$fid')";
              
             // exit;
             if(mysqli_query($conn,$sql)===TRUE){
@@ -75,6 +75,24 @@
 
             }
             
+        }
+        if($action=="fileshow"){
+            $userid=$_SESSION['adminid'];
+            $fid=$_REQUEST['fid'];
+            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and NotFolder=1";
+            $result=mysqli_query($conn,$sql);
+            $data=array();
+            $resultfound=mysqli_num_rows($result);
+            if($resultfound>0){
+                while($row=mysqli_fetch_assoc($result)){
+                    $data[]=$row;
+                }
+            }
+            $output['data']=$data;
+            echo json_encode($output);
+            
+        
+        
         }
 
 

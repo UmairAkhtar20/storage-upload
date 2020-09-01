@@ -14,7 +14,17 @@
  wdith:200px;
  float:left;
  margin: 5px;
-}</style>
+}
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+
+
+
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STORAGE HOME</title>
@@ -35,6 +45,11 @@
             $("#btnupload").on('click',function(){
                     var cur=cur_fid;
                     Save(cur); 
+
+            });
+            $("#btnshowfile").on('click',function(){
+                showfile(cur_fid);
+
 
             });
             // end of btncreate event
@@ -138,6 +153,7 @@
                $(this).nextAll().remove();
                Folders(cur_fid); 
             });
+            
 
            
 
@@ -181,12 +197,46 @@
 
 
                     }
+                    function showfile(cur_fid)
+                    {
+                        var data={'action':'fileshow','fid':cur_fid};
+                        var settings={
+                            Type:"Post",
+                            url:"api1.php",
+                            data:data,
+                            dataType:"json",
+                            success:function(response){
+                                $(".file").empty();
+                                for(var i=0;i<response.data.length;i++){
+                                    var data=response.data[i];
+                                    var div=$("<div >");
+                                    div.append("ID:"+data.ID+"<br>");
+                                    div.append("NAME:"+data.NAME+"<br>");
+                                    div.append("created by:"+data.createdBy+"<br>");
+                                    div.append("userid :"+data.userid+"<br>");
+                                    div.append("<img src='img/"+data.picUrl+"'/>");
+                                    $(".file").append(div);
+
+                                    
+                                }
+                            },
+                            error:function(){
+                                alert("error!!!");
+                            }
+                        };
+                        console.log("rqvst send");
+                        $.ajax(settings);
+
+                    }
 
 
 
 
 
             
+       
+       
+       
         });
         // end of ready
     
@@ -217,16 +267,20 @@
     
       
         <div>
-         Click Here To show your folder:<input type="button" value="show" id='btnshow'>
+         Click Here To show your folder:<input type="button" value="show" id='btnshow'> <br>
+         Click Here To show your file:<input type="button" value="files" id='btnshowfile'>
                          
         </div>
         <div id=span>
         <a  href='#'id=span1 fid=0>Root </a></div>
 
         <div class="bos" id='da'>
+         </div>
+         <div class="file">
+         
+         </div>
 
-        
-        </div>
+
 
 
 
