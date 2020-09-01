@@ -7,7 +7,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-<link href="css/ffolders.min.css" rel="stylesheet">
 <style>
 .box {
  background-image: url("Folder-icon.png");
@@ -39,6 +38,7 @@ img {
      var cur_fname="";
      var cur_fid=0;
         $(document).ready(function () {
+            Folders(0);
 
             // start of btncreate event
             $("#btncreate").on('click',function () 
@@ -81,11 +81,11 @@ img {
             }
 
 
-            $("#btnshow").on('click',function () {
-                Folders(0);
-                return false;
+            
+               
                 
-            });
+                
+            
             
             //end of the btnshow event
             //createion of folder function
@@ -102,17 +102,39 @@ img {
                        $("#da").empty();
                         for(var i=0;i<response.data.length;i++){
                             var data=response.data[i];
-                            var div=$("<div class='box'>");
-                          //  div.append("ID:"+data.ID+"<br>");
-                          div.append("<br>");
-                            div.append(""+data.NAME+"<br>");
-                           // div.append("created by:"+data.createdBy+"<br>");
-                           // div.append("userid :"+data.userid+"<br>");
-                            div.append("</div>");
-                            div.attr('fname',data.NAME);
-                            div.attr('fid',data.ID);
-                            $(".bos").append(div);
-                     
+                            if(data.NotFolder==0)
+                            {
+                                var div=$("<div class='box'>");
+                                div.append("<br>");
+                                div.append(""+data.NAME+"<br>");
+                                div.append("</div>");
+                                div.attr('fname',data.NAME);
+                                div.attr('fid',data.ID);
+                                $(".bos").append(div);
+                                
+                            }
+                            else if(data.NotFolder==1)
+                            {
+                              //  var div=$("<div class='box'>");
+                              ////  div.append("<br>");
+                              //  div.append(""+data.NAME+"<br>");
+                              //  div.append("</div>");
+                              //  div.attr('fname',data.NAME);
+                              //  div.attr('fid',data.ID);
+                              //  $(".bos").append(div);
+                            
+                                
+                                var div1=$("<div >");
+                               // div1.append("ID:"+data.ID+"<br>");
+                                div1.append("NAME:"+data.NAME+"<br>");
+                               // div1.append("created by:"+data.createdBy+"<br>");
+                               // div1.append("userid :"+data.userid+"<br>");
+                                div1.append("<img src='img/"+data.picUrl+"'/>");
+                                $(".bos").append(div1);
+
+
+                            }
+                            
 
                                                             
                         }
@@ -205,7 +227,7 @@ img {
 
 
                     }
-                    function showfile(cur_fid)
+               /*     function showfile(cur_fid)
                     {
                         var data={'action':'fileshow','fid':cur_fid};
                         var settings={
@@ -235,7 +257,7 @@ img {
                         console.log("rqvst send");
                         $.ajax(settings);
 
-                    }
+                    } */
 
 
 
@@ -275,8 +297,9 @@ img {
     
       
         <div>
-         Click Here To show your folder:<input type="button" value="show" id='btnshow'> <br>
-         Click Here To show your file:<input type="button" value="files" id='btnshowfile'>
+       
+
+         
                          
         </div>
         <div id=span>
@@ -285,9 +308,7 @@ img {
         <div class="bos" id='da'>
          </div>
          <br><br>
-         <div class="file">
          
-         </div>
          
 
 

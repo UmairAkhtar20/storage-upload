@@ -30,7 +30,7 @@
         if($action=="show"){
             $userid=$_SESSION['adminid'];
             $fid=$_REQUEST['fid'];
-            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and NotFolder=0";
+            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'";
             $result=mysqli_query($conn,$sql);
             $data=array();
             $resultfound=mysqli_num_rows($result);
