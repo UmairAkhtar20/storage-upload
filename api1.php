@@ -1,6 +1,7 @@
 <?php include("connec.php"); ?>
 <?php session_start();?>
 <?php include("utility.php");?>
+<?php include("fpdf/fpdf.php");?>
 <?php
 
     if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
@@ -76,19 +77,29 @@
             }
             
         }
-        if($action=="fileshow"){
+        if($action=="pdf"){
             $userid=$_SESSION['adminid'];
             $fid=$_REQUEST['fid'];
-            $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and NotFolder=1";
-            $result=mysqli_query($conn,$sql);
-            $data=array();
-            $resultfound=mysqli_num_rows($result);
-            if($resultfound>0){
-                while($row=mysqli_fetch_assoc($result)){
-                    $data[]=$row;
-                }
-            }
-            $output['data']=$data;
+            $pdf=new FPDF('p','mm','A4');
+            $pdf->AddPage();
+            $pdf->SetFont('arial','b','14');
+            $pdf->cell('40','10','ID','1','0','C');
+            $pdf->cell('40','10','NAME','1','0','C');
+            $pdf->cell('40','10','CreatedBy','1','0','C');
+            $pdf->cell('40','10','CreatedON','1','0','C');
+            $pdf->cell('40','10','Userid','1','0','C');
+            $pdf->cell('40','10','PicUrl','1','0','C');
+
+          //  $sql="SELECT * FROM folders2 where userid='$userid'and parentfolder='$fid'and NotFolder=1";
+        //    $result=mysqli_query($conn,$sql);
+         //   $data=array();
+           /// $resultfound=mysqli_num_rows($result);
+           // if($resultfound>0){
+           //     while($row=mysqli_fetch_assoc($result)){
+           //         $data[]=$row;
+           //     }
+          //  }
+            $output['data']=$pdf->output();
             echo json_encode($output);
             
         

@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<link rel="stylesheet" href="bootstrap.css">
 <style>
 .box {
  background-image: url("Folder-icon.png");
@@ -57,6 +58,10 @@ img {
 
 
             });
+       /*     $("#btnpdf").on('click',function(){
+                alert("ddd");
+                createpdf(cur_fid);
+            }); */
             // end of btncreate event
             //start of btnshow event
 
@@ -227,37 +232,26 @@ img {
 
 
                     }
-               /*     function showfile(cur_fid)
-                    {
-                        var data={'action':'fileshow','fid':cur_fid};
-                        var settings={
-                            Type:"Post",
-                            url:"api1.php",
-                            data:data,
-                            dataType:"json",
-                            success:function(response){
-                                $(".file").empty();
-                                for(var i=0;i<response.data.length;i++){
-                                    var data=response.data[i];
-                                    var div=$("<div >");
-                                    div.append("ID:"+data.ID+"<br>");
-                                    div.append("NAME:"+data.NAME+"<br>");
-                                    div.append("created by:"+data.createdBy+"<br>");
-                                    div.append("userid :"+data.userid+"<br>");
-                                    div.append("<img src='img/"+data.picUrl+"'/>");
-                                    $(".file").append(div);
-
-                                    
-                                }
-                            },
-                            error:function(){
-                                alert("error!!!");
-                            }
-                        };
-                        console.log("rqvst send");
-                        $.ajax(settings);
-
-                    } */
+             /*  function createpdf(cur_fid)
+               {
+                alert("dddd");
+                    var data={"action":"pdf","fid":cur_fid};
+                    var settings={
+                        Type:"POST",
+                        url:"api1.php",
+                        dataType:"json",
+                        data:data,
+                        success:function(r){
+                            
+                            alert(r);
+                            
+                        },
+                        error:function(){
+                            alert("error!!!");
+                        }
+                    };
+                    $.ajax(settings);
+               } */
 
 
 
@@ -297,9 +291,11 @@ img {
     
       
         <div>
+        <form action="pdf_gen.php" method="post">
+        <button type="submit" name="btnpdf" class="btn btn-success">CreatePdf</button>
+        </form>
        
-
-         
+            
                          
         </div>
         <div id=span>
